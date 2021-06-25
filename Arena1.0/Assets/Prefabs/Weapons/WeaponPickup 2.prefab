@@ -130,7 +130,7 @@ MonoBehaviour:
   WeaponName: Scorch
   Firerate: 5
   Speed: 5
-  BulletDMG: 0.01
+  BulletDMG: 0.8
   BulletLIFE: 2
   EffectType: 2
   WeaponMag: 1000

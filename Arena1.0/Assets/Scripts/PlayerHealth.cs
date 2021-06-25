@@ -14,13 +14,15 @@ public class PlayerHealth : MonoBehaviour
     GameObject Camera;
     public float Duration, Strength;
 
-    //public event System.Action OnDeath;
-
+    // ultimate attack
+    public float ultimateCountdown = 0;
+    public float ultimateCountdownPer;
+    public RadialEffect ultimateAttack;
     void Start()
     {
         currentHealth = health;
         HealthPercentage = currentHealth / health;
-        
+        ultimateCountdownPer = ultimateCountdown / 10f;
         Camera = GameObject.FindGameObjectWithTag("MainCamera");//.GetComponent<ScreenShake>();
         //health = StartHealth;
         
@@ -34,7 +36,16 @@ public class PlayerHealth : MonoBehaviour
     private void Damage(float amount)
     {
         currentHealth -= amount;
+        
         HealthPercentage = currentHealth / health;
+        ultimateCountdownPer = ultimateCountdown / 10f;
+       // Debug.Log(ultimateCountdownPer + " in heal script");
+        if (ultimateCountdown == 10)
+        {
+           StartCoroutine( CheckUltimate());
+           // Debug.Log("ready");
+        }
+       
         //Debug.Log(health);
         if (currentHealth <= 0 && !dead)
         {
@@ -45,6 +56,15 @@ public class PlayerHealth : MonoBehaviour
         }
       
     }
+    IEnumerator CheckUltimate()
+    {
+        //yield return new WaitForSeconds(5);
+       /// Debug.Log("ready");
+        ultimateAttack.enabled = true;
+            ultimateCountdown = 0;
+            yield return new WaitForSeconds(3);
+            ultimateAttack.enabled = false;
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -52,11 +72,13 @@ public class PlayerHealth : MonoBehaviour
         {
             //ShootProjectile bullet = GameObject.FindGameObjectWithTag("Player").GetComponent<ShootProjectile>();
             EnemyAttack bullet = GameObject.FindGameObjectWithTag("Enemy").GetComponent<EnemyAttack>();
+            ultimateCountdown = ultimateCountdown + 1;
             Damage(bullet.EnemyDMG);
         }
         if(other.tag== "BossBullet")
         {
             BossAttack bullet = GameObject.FindGameObjectWithTag("Boss").GetComponent<BossAttack>();
+            ultimateCountdown = ultimateCountdown + 1;
             Damage(bullet.EnemyDMG);
         }
     }

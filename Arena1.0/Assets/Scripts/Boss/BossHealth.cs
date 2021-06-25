@@ -21,7 +21,7 @@ public class BossHealth : MonoBehaviour
     }
     private void Damage(float amount)
     {
-        CurrentHealth -= amount;
+        CurrentHealth -= amount*5;
         HealthPercentage = CurrentHealth / health;
         if (CurrentHealth <= 0 && !dead)
         {
