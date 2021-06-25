@@ -39,6 +39,12 @@ public class WaveSpawner : MonoBehaviour
     public int nextWave = 0;
     private float SearchCountDown = 1f;
 
+    // sound code
+    public AudioSource SoundSource1;
+    public AudioClip DeepSoundTrack;
+    public AudioSource SoundSource2;
+    public AudioClip SoftSoundTrack;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,6 +53,7 @@ public class WaveSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         if (nextWave == 2)
         {
             WallSet1.SetActive(true);
@@ -61,7 +68,7 @@ public class WaveSpawner : MonoBehaviour
             WallSet1.SetActive(true);
             WallSet2.SetActive(true);
         }
-        
+        PlaySound();
         if (state == SpawnState.WAITING)
         {
             //Check if their are active enemies
@@ -169,6 +176,18 @@ public class WaveSpawner : MonoBehaviour
         Transform _SP = SpawnPoints[Random.Range(0, SpawnPoints.Length)];
         Instantiate(_enemy, _SP.position, _SP.rotation);
         
+
+    }
+    void PlaySound()
+    {
+
+        if (nextWave == 4)
+        {
+            SoundSource1.volume = 1;
+        }
+        
+       
+            return;
 
     }
 }
